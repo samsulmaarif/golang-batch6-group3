@@ -3,23 +3,29 @@ package db
 import (
 	"fmt"
 	"golang-batch6-group3/server/model"
+	"log"
+	"os"
 
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
-var (
-	DB_HOST = "localhost"
-	DB_PORT = "5432"
-	DB_USER = "postgres"
-	DB_PASS = "rahasia"
-	DB_NAME = "golangnest"
-)
-
 func ConnectGormDB() (*gorm.DB, error) {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	host := os.Getenv("DB_HOST")
+	port := os.Getenv("DB_PORT")
+	user := os.Getenv("DB_USER")
+	pass := os.Getenv("DB_PASS")
+	dbname := os.Getenv("DB_NAME")
+
 	dsn := fmt.Sprintf(
 		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
-		DB_HOST, DB_PORT, DB_USER, DB_PASS, DB_NAME,
+		host, port, user, pass, dbname,
 	)
 
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})

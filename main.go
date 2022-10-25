@@ -16,10 +16,8 @@ func main() {
 }
 
 func run() {
-	// router := http.NewServeMux()
 	port := ":6000"
 
-	// db := config.ConnectDB()
 	db, err := db.ConnectGormDB()
 	if err != nil {
 		panic(err)
@@ -29,7 +27,6 @@ func run() {
 	userRepo := gorm_postgres.NewUserRepoGormPostgres(db)
 	userSvc := service.NewServices(userRepo, typicodeAdaptor)
 	userHandler := controller.NewUserHandler(userSvc)
-	// server.StartServer(router, port, db)
 
 	router := gin.Default()
 	router.Use(gin.Logger())
