@@ -10,10 +10,14 @@ type BaseModel struct {
 
 type User struct {
 	BaseModel
-	Fullname string
-	Email    string
-	Password string
-	Role     string
+	Fullname   string `json:"fullname"`
+	Email      string `json:"email"`
+	Password   string `json:"password"`
+	Role       string `json:"role"`
+	Gender     string `json:"gender"`
+	Street     string `json:"street"`
+	CityId     int    `json:"city_id"`
+	ProvinceId int    `json:"province_id"`
 }
 
 var Users = []User{}
