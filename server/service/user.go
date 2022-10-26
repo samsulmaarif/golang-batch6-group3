@@ -67,6 +67,20 @@ func (u *UserServices) CreateUser(req *params.UserCreate) *view.Response {
 	return view.SuccessCreated(data)
 }
 
+func (u *UserServices) UpdateProfile(email string, req *params.UserCreate) *view.Response {
+	user := req.ParseToModel()
+
+	err := u.repo.UpdateUserByEmail(email, user)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return view.ErrNotFound()
+		}
+		return view.ErrInternalServer(err.Error())
+	}
+
+	return view.SuccessCreated("UPDATE_USER_SUCCESS")
+}
+
 func (u *UserServices) Login(req *params.UserLogin) *view.Response {
 	user, err := u.repo.FindUserByEmail(req.Email)
 	if err != nil {

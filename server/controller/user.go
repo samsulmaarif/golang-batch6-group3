@@ -58,6 +58,21 @@ func (u *UserHandler) GinGetUserByEmail(c *gin.Context) {
 	WriteJsonResponseGin(c, resp)
 }
 
+func (u *UserHandler) GinUpdateUserProfile(c *gin.Context) {
+	email := c.GetString("USER_EMAIL")
+
+	var req params.UserCreate
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		resp := view.ErrBadRequest(err.Error())
+		WriteJsonResponseGin(c, resp)
+		return
+	}
+	resp := u.svc.UpdateProfile(email, &req)
+
+	WriteJsonResponseGin(c, resp)
+}
+
 func (u *UserHandler) GinLogin(c *gin.Context) {
 	var req params.UserLogin
 	err := c.ShouldBindJSON(&req)

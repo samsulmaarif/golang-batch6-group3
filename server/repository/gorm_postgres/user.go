@@ -36,6 +36,14 @@ func (u *userRepo) Register(user *model.User) error {
 	return err
 }
 
+func (u *userRepo) UpdateUserByEmail(email string, users *model.User) error {
+	err := u.db.Model(model.User{}).Where("email=?", email).Updates(model.User{Fullname: users.Fullname, Gender: users.Gender, Contact: users.Contact, Street: users.Street, CityId: users.CityId, ProvinceId: users.ProvinceId}).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func (u *userRepo) FindUserByEmail(email string) (*model.User, error) {
 	var user model.User
 	err := u.db.Where("email=?", email).First(&user).Error

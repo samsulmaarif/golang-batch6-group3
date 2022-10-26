@@ -14,6 +14,7 @@ type User struct {
 	Email      string `json:"email"`
 	Password   string `json:"password"`
 	Role       string `json:"role"`
+	Contact    string `json:"contact"`
 	Gender     string `json:"gender"`
 	Street     string `json:"street"`
 	CityId     int    `json:"city_id"`
