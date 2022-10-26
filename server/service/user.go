@@ -18,7 +18,7 @@ type UserServices struct {
 	typicodeAdaptor *adaptor.TypicodeAdaptor
 }
 
-func NewServices(repo repository.UserRepo, typicodeAdaptor *adaptor.TypicodeAdaptor) *UserServices {
+func NewUserServices(repo repository.UserRepo, typicodeAdaptor *adaptor.TypicodeAdaptor) *UserServices {
 	return &UserServices{
 		repo:            repo,
 		typicodeAdaptor: typicodeAdaptor,
