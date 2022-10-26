@@ -27,14 +27,18 @@ func run() {
 	typicodeAdaptor := adaptor.NewTypicodeAdaptor("https://jsonplaceholder.typicode.com/posts")
 
 	userRepo := gorm_postgres.NewUserRepoGormPostgres(db)
-	userSvc := service.NewServices(userRepo, typicodeAdaptor)
+	userSvc := service.NewUserServices(userRepo, typicodeAdaptor)
 	userHandler := controller.NewUserHandler(userSvc)
 	// server.StartServer(router, port, db)
+
+	productRepo := gorm_postgres.NewProductRepoGormPostgres(db)
+	productSvc := service.NewProductServices(productRepo, typicodeAdaptor)
+	productHandler := controller.NewProductHandler(productSvc)
 
 	router := gin.Default()
 	router.Use(gin.Logger())
 
 	middleware := server.NewMiddleware(userSvc)
-	app := server.NewRouterGin(router, userHandler, middleware)
+	app := server.NewRouterGin(router, userHandler, productHandler, middleware)
 	app.Start(port)
 }
