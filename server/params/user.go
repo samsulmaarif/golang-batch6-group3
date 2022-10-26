@@ -12,6 +12,7 @@ type UserCreate struct {
 	Email      string `validate:"required"`
 	Password   string `validate:"required"`
 	Gender     string `validate:"required"`
+	Contact    string `validate:"required"`
 	Street     string `validate:"required"`
 	CityId     int    `validate:"required"`
 	ProvinceId int    `validate:"required"`
@@ -45,6 +46,7 @@ func (u *UserCreate) ParseToModel() *model.User {
 		Email:      u.Email,
 		Password:   u.Password,
 		Gender:     u.Gender,
+		Contact:    u.Contact,
 		Street:     u.Street,
 		CityId:     u.CityId,
 		ProvinceId: u.ProvinceId,
