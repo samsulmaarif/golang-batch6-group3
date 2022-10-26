@@ -59,12 +59,12 @@ func (u *UserServices) CreateUser(req *params.UserCreate) *view.Response {
 		return view.ErrInternalServer(err.Error())
 	}
 
-	data, err := u.typicodeAdaptor.GetAllTypicode()
-	if err != nil {
-		return view.ErrInternalServer(err.Error())
-	}
+	// data, err := u.typicodeAdaptor.GetAllTypicode()
+	// if err != nil {
+	// 	return view.ErrInternalServer(err.Error())
+	// }
 
-	return view.SuccessCreated(data)
+	return view.SuccessCreated(user)
 }
 
 func (u *UserServices) UpdateProfile(email string, req *params.UserCreate) *view.Response {

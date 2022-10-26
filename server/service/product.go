@@ -49,12 +49,12 @@ func (p *ProductServices) AddProduct(req *params.ProductCreate) *view.Response {
 		return view.ErrInternalServer(err.Error())
 	}
 
-	data, err := p.typicodeAdaptor.GetAllTypicode()
-	if err != nil {
-		return view.ErrInternalServer(err.Error())
-	}
+	// data, err := p.typicodeAdaptor.GetAllTypicode()
+	// if err != nil {
+	// 	return view.ErrInternalServer(err.Error())
+	// }
 
-	return view.SuccessCreated(data)
+	return view.SuccessCreated(product)
 }
 
 func (p *ProductServices) DeleteProductById(id string) *view.Response {

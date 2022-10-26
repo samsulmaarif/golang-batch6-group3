@@ -62,12 +62,12 @@ func (t *TransactionServices) CreateTransaction(req *params.TransactionCreate) *
 		return view.ErrInternalServer(err.Error())
 	}
 
-	data, err := t.typicodeAdaptor.GetAllTypicode()
-	if err != nil {
-		return view.ErrInternalServer(err.Error())
-	}
+	// data, err := t.typicodeAdaptor.GetAllTypicode()
+	// if err != nil {
+	// 	return view.ErrInternalServer(err.Error())
+	// }
 
-	return view.SuccessCreated(data)
+	return view.SuccessCreated(transaction)
 }
 
 func (t *TransactionServices) UpdateTransactionStatusById(id string, status string) *view.Response {
