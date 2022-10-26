@@ -43,13 +43,6 @@ func (u *UserHandler) GinRegister(c *gin.Context) {
 		return
 	}
 
-	// if len(req.Fullname) < 5 {
-
-	// 	resp := view.ErrBadRequest("user name length must be greater than 4")
-	// 	WriteJsonResponseGin(c, resp)
-	// 	return
-	// }
-
 	resp := u.svc.CreateUser(&req)
 	WriteJsonResponseGin(c, resp)
 }

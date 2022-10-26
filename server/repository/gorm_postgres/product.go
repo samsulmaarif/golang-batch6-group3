@@ -46,13 +46,11 @@ func (p *productRepo) DeleteProductById(id string) (*model.Product, error) {
 }
 
 func (p *productRepo) UpdateProductById(id string, products *model.Product) error {
-	err := p.db.Transaction(func(tx *gorm.DB) error {
-		if err := tx.Where("id=?", id).Updates(model.Product{Name: products.Name, Category: products.Category, Description: products.Description, Price: products.Price, Stock: products.Stock, ImgUrl: products.ImgUrl}).Error; err != nil {
-			return err
-		}
-		return nil
-	})
-	return err
+	err := p.db.Model(model.Product{}).Where("id=?", id).Updates(model.Product{Name: products.Name, Category: products.Category, Description: products.Description, Price: products.Price, Stock: products.Stock, ImgUrl: products.ImgUrl}).Error
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func (p *productRepo) FindProductById(id string) (*model.Product, error) {

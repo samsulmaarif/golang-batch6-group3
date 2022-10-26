@@ -71,8 +71,13 @@ func (p *ProductHandler) GinUpdateProduct(c *gin.Context) {
 		WriteJsonResponseGin(c, view.ErrBadRequest("product Id not found in params"))
 		return
 	}
-	result := p.svc.UpdateProductById(Id, &req)
-	WriteJsonResponseGin(c, result)
+
+	err2 := p.svc.UpdateProductById(Id, &req)
+	if err2 != nil {
+		WriteJsonResponseGin(c, view.ErrBadRequest("UPDATE_USER_FAIL"))
+		return
+	}
+	WriteJsonResponseGin(c, view.SuccessCreated("UPDATE_PRODUCT_SUCCESS"))
 }
 
 func (p *ProductHandler) GetProductById(c *gin.Context) {

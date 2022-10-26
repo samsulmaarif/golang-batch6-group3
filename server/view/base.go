@@ -3,16 +3,18 @@ package view
 import "net/http"
 
 type Response struct {
-	Status  int         `json:"status"`
-	Message interface{} `json:"message"`
-	Payload interface{} `json:"payload"`
-	Error   interface{} `json:"error"`
+	Status      int         `json:"status"`
+	Message     interface{} `json:"message"`
+	Payload     interface{} `json:"payload"`
+	GeneralInfo interface{} `json:"general_info"`
+	Error       interface{} `json:"error"`
 }
 
-func SuccessCreated(payload interface{}) *Response {
+func SuccessCreated(message interface{}) *Response {
 	return &Response{
-		Status:  http.StatusCreated,
-		Payload: payload,
+		Status:      http.StatusCreated,
+		Message:     message,
+		GeneralInfo: "NooBee-Shop",
 	}
 }
 
