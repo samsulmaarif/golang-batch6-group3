@@ -53,6 +53,42 @@ func (t *TransactionHandler) GinAddTransaction(c *gin.Context) {
 	WriteJsonResponseGin(c, resp)
 }
 
+func (p *TransactionHandler) GinPackageTransactions(c *gin.Context) {
+	Id, isExist := c.Params.Get("Id")
+	if !isExist {
+		WriteJsonResponseGin(c, view.ErrBadRequest("transaction Id not found in params"))
+		return
+	}
+
+	resp := p.svc.UpdateTransactionStatusById(Id, "dikemas")
+
+	WriteJsonResponseGin(c, resp)
+}
+
+func (p *TransactionHandler) GinSendTransactions(c *gin.Context) {
+	Id, isExist := c.Params.Get("Id")
+	if !isExist {
+		WriteJsonResponseGin(c, view.ErrBadRequest("transaction Id not found in params"))
+		return
+	}
+
+	resp := p.svc.UpdateTransactionStatusById(Id, "dikirim")
+
+	WriteJsonResponseGin(c, resp)
+}
+
+func (p *TransactionHandler) GinConfirmTransactions(c *gin.Context) {
+	Id, isExist := c.Params.Get("Id")
+	if !isExist {
+		WriteJsonResponseGin(c, view.ErrBadRequest("transaction Id not found in params"))
+		return
+	}
+
+	resp := p.svc.UpdateTransactionStatusById(Id, "terkonfirmasi")
+
+	WriteJsonResponseGin(c, resp)
+}
+
 func (t *TransactionHandler) GinGetTransactionById(c *gin.Context) {
 	Id, isExist := c.Params.Get("Id")
 	if !isExist {

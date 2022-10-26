@@ -11,7 +11,11 @@ type TransactionCreate struct {
 	Estimasi  string `validate:"required"`
 	UserId    string `validate:"required"`
 	ProductId string `validate:"required"`
-	Status    string `validate:"required"`
+	Status    string
+}
+
+type TransactionStatus struct {
+	Status string
 }
 
 func (t *TransactionCreate) ParseToModel() *model.Transaction {
@@ -23,5 +27,11 @@ func (t *TransactionCreate) ParseToModel() *model.Transaction {
 		UserId:    t.UserId,
 		ProductId: t.ProductId,
 		Status:    t.Status,
+	}
+}
+
+func (t *TransactionStatus) ParseToModel() *model.Transaction {
+	return &model.Transaction{
+		Status: t.Status,
 	}
 }

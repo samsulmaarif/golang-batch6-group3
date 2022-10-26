@@ -38,8 +38,11 @@ func (r *GinRouter) Start(port string) {
 
 	transactions := r.router.Group("/transactions")
 	transactions.GET("/all", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinGetTransactions, []string{"admin"}))
+	transactions.PUT("/package/:Id", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinPackageTransactions, []string{"admin"}))
+	transactions.PUT("/send/:Id", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinSendTransactions, []string{"admin"}))
+	transactions.PUT("/confirm/:Id", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinConfirmTransactions, []string{"member"}))
 	transactions.GET("/", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinGetMemberTransactions, []string{"member"}))
-	transactions.POST("/add", r.transaction.GinAddTransaction)
+	transactions.POST("/add", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinAddTransaction, []string{"member"}))
 
 	products := r.router.Group("/products")
 	products.GET("/", r.product.GinGetProducts)

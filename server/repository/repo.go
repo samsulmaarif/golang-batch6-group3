@@ -20,6 +20,7 @@ type ProductRepo interface {
 type TransactionRepo interface {
 	GetTransactions() (*[]model.Transaction, error)
 	GetMemberTransactions(id string) (*[]model.Transaction, error)
+	UpdateTransactionStatusById(id string, status string) error
 	AddTransaction(transaction *model.Transaction) error
 	FindTransactionById(id string) (*model.Transaction, error)
 }

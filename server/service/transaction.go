@@ -54,6 +54,7 @@ func (t *TransactionServices) CreateTransaction(req *params.TransactionCreate) *
 	transaction.Id = uuid.NewString()
 	transaction.CreatedAt = time.Now()
 	transaction.UpdatedAt = time.Now()
+	transaction.Status = "pending"
 
 	err := t.repo.AddTransaction(transaction)
 	if err != nil {
@@ -67,6 +68,17 @@ func (t *TransactionServices) CreateTransaction(req *params.TransactionCreate) *
 	}
 
 	return view.SuccessCreated(data)
+}
+
+func (t *TransactionServices) UpdateTransactionStatusById(id string, status string) *view.Response {
+	err := t.repo.UpdateTransactionStatusById(id, status)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return view.ErrNotFound()
+		}
+		return view.ErrInternalServer(err.Error())
+	}
+	return view.SuccessFindAll("UPDATE_PRODUCT_SUCCESS")
 }
 
 func (u *TransactionServices) FindTransactionById(id string) *view.Response {
