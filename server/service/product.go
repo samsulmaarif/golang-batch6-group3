@@ -80,7 +80,7 @@ func (p *ProductServices) UpdateProductById(id string, req *params.ProductCreate
 		return view.ErrInternalServer(err.Error())
 	}
 
-	return view.SuccessFindAll("berhasil")
+	return view.SuccessFindAll("UPDATE_PRODUCT_SUCCESS")
 }
 
 func (p *ProductServices) FindProductById(id string) *view.Response {

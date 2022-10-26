@@ -32,10 +32,14 @@ func run() {
 	productSvc := service.NewProductServices(productRepo, typicodeAdaptor)
 	productHandler := controller.NewProductHandler(productSvc)
 
+	transactionRepo := gorm_postgres.NewTransactionRepoGormPostgres(db)
+	transactionSvc := service.NewTransactionServices(transactionRepo, typicodeAdaptor)
+	transactionHandler := controller.NewTransactionHandler(transactionSvc)
+
 	router := gin.Default()
 	router.Use(gin.Logger())
 
 	middleware := server.NewMiddleware(userSvc)
-	app := server.NewRouterGin(router, userHandler, productHandler, middleware)
+	app := server.NewRouterGin(router, userHandler, productHandler, transactionHandler, middleware)
 	app.Start(port)
 }

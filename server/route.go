@@ -7,18 +7,20 @@ import (
 )
 
 type GinRouter struct {
-	router     *gin.Engine
-	user       *controller.UserHandler
-	product    *controller.ProductHandler
-	middleware *Middleware
+	router      *gin.Engine
+	user        *controller.UserHandler
+	product     *controller.ProductHandler
+	transaction *controller.TransactionHandler
+	middleware  *Middleware
 }
 
-func NewRouterGin(router *gin.Engine, user *controller.UserHandler, product *controller.ProductHandler, middleware *Middleware) *GinRouter {
+func NewRouterGin(router *gin.Engine, user *controller.UserHandler, product *controller.ProductHandler, transaction *controller.TransactionHandler, middleware *Middleware) *GinRouter {
 	return &GinRouter{
-		router:     router,
-		user:       user,
-		product:    product,
-		middleware: middleware,
+		router:      router,
+		user:        user,
+		product:     product,
+		transaction: transaction,
+		middleware:  middleware,
 	}
 }
 
@@ -33,6 +35,11 @@ func (r *GinRouter) Start(port string) {
 	auth := r.router.Group("/auth")
 	auth.POST("/login", r.user.GinLogin)
 	auth.POST("/register", r.user.GinRegister)
+
+	transactions := r.router.Group("/transactions")
+	transactions.GET("/all", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinGetTransactions, []string{"admin"}))
+	transactions.GET("/", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinGetMemberTransactions, []string{"member"}))
+	transactions.POST("/add", r.transaction.GinAddTransaction)
 
 	products := r.router.Group("/products")
 	products.GET("/", r.product.GinGetProducts)
