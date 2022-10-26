@@ -27,6 +27,7 @@ func (r *GinRouter) Start(port string) {
 
 	users := r.router.Group("/users")
 	users.GET("/", r.middleware.Auth, r.middleware.CheckRole(r.user.GinGetUsers, []string{"admin"}))
+	users.GET("/email/:Email", r.middleware.Auth, r.middleware.CheckRole(r.user.GinGetUserByEmail, []string{"admin"}))
 	users.POST("/register", r.user.GinRegister)
 
 	auth := r.router.Group("/auth")
