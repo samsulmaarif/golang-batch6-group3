@@ -36,9 +36,28 @@ func (p *productRepo) AddProduct(product *model.Product) error {
 	return err
 }
 
-func (p *productRepo) FindProductById(email string) (*model.Product, error) {
+func (p *productRepo) DeleteProductById(id string) (*model.Product, error) {
 	var product model.Product
-	err := p.db.Where("email=?", email).First(&product).Error
+	err := p.db.Where("id=?", id).Delete(&product).Error
+	if err != nil {
+		return nil, err
+	}
+	return &product, nil
+}
+
+func (p *productRepo) UpdateProductById(id string, products *model.Product) error {
+	err := p.db.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Where("id=?", id).Updates(model.Product{Name: products.Name, Category: products.Category, Description: products.Description, Price: products.Price, Stock: products.Stock, ImgUrl: products.ImgUrl}).Error; err != nil {
+			return err
+		}
+		return nil
+	})
+	return err
+}
+
+func (p *productRepo) FindProductById(id string) (*model.Product, error) {
+	var product model.Product
+	err := p.db.Where("id=?", id).First(&product).Error
 	if err != nil {
 		return nil, err
 	}

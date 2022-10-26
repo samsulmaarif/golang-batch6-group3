@@ -28,11 +28,16 @@ func (r *GinRouter) Start(port string) {
 	users := r.router.Group("/users")
 	users.GET("/", r.middleware.Auth, r.middleware.CheckRole(r.user.GinGetUsers, []string{"admin"}))
 	users.POST("/register", r.user.GinRegister)
-	users.POST("/login", r.user.GinLogin)
+
+	auth := r.router.Group("/auth")
+	auth.POST("/login", r.user.GinLogin)
 
 	products := r.router.Group("/products")
 	products.GET("/", r.product.GinGetProducts)
 	products.POST("/add", r.middleware.Auth, r.middleware.CheckRole(r.product.GinAddProduct, []string{"admin"}))
+	products.DELETE("/id/:Id", r.middleware.Auth, r.middleware.CheckRole(r.product.GinDeleteProduct, []string{"admin"}))
+	products.PUT("/id/:Id", r.middleware.Auth, r.middleware.CheckRole(r.product.GinUpdateProduct, []string{"admin"}))
+	products.GET("/id/:Id", r.product.GetProductById)
 
 	r.router.Run(port)
 }

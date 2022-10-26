@@ -4,6 +4,7 @@ import "net/http"
 
 type Response struct {
 	Status  int         `json:"status"`
+	Message interface{} `json:"message"`
 	Payload interface{} `json:"payload"`
 	Error   interface{} `json:"error"`
 }
@@ -12,6 +13,21 @@ func SuccessCreated(payload interface{}) *Response {
 	return &Response{
 		Status:  http.StatusCreated,
 		Payload: payload,
+	}
+}
+
+func SuccessLogin(message interface{}, payload interface{}) *Response {
+	return &Response{
+		Status:  http.StatusCreated,
+		Message: message,
+		Payload: payload,
+	}
+}
+
+func SuccessDeleted(message interface{}) *Response {
+	return &Response{
+		Status:  http.StatusCreated,
+		Message: message,
 	}
 }
 

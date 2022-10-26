@@ -10,6 +10,8 @@ type UserRepo interface {
 
 type ProductRepo interface {
 	GetProducts() (*[]model.Product, error)
-	AddProduct(user *model.Product) error
+	AddProduct(product *model.Product) error
+	DeleteProductById(id string) (*model.Product, error)
+	UpdateProductById(id string, product *model.Product) error
 	FindProductById(id string) (*model.Product, error)
 }

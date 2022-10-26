@@ -57,13 +57,39 @@ func (p *ProductServices) AddProduct(req *params.ProductCreate) *view.Response {
 	return view.SuccessCreated(data)
 }
 
-func (p *ProductServices) FindProductById(id string) *view.Response {
-	user, err := p.repo.FindProductById(id)
+func (p *ProductServices) DeleteProductById(id string) *view.Response {
+	delete, err := p.repo.DeleteProductById(id)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
 		return view.ErrInternalServer(err.Error())
 	}
-	return view.SuccessFindAll(user)
+
+	return view.SuccessFindAll(delete)
+}
+
+func (p *ProductServices) UpdateProductById(id string, req *params.ProductCreate) *view.Response {
+	product := req.ParseToModel()
+
+	err := p.repo.UpdateProductById(id, product)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return view.ErrNotFound()
+		}
+		return view.ErrInternalServer(err.Error())
+	}
+
+	return view.SuccessFindAll("berhasil")
+}
+
+func (p *ProductServices) FindProductById(id string) *view.Response {
+	product, err := p.repo.FindProductById(id)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return view.ErrNotFound()
+		}
+		return view.ErrInternalServer(err.Error())
+	}
+	return view.SuccessFindAll(product)
 }

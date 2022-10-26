@@ -14,12 +14,12 @@ type Token struct {
 	Email  string `json:"email"`
 }
 
-var SECRET_KEY = "iniAdalahSecretKey"
+var SECRET_KEY = "SecretKeyGroup3"
 
 func CreateToken(payload *Token) (string, error) {
 	claims := jwt.MapClaims{
 		"payload": payload,
-		"issued":  time.Now().Add(10 * time.Minute),
+		"issued":  time.Now().Add(24 * time.Hour),
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

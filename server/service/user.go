@@ -91,7 +91,7 @@ func (u *UserServices) Login(req *params.UserLogin) *view.Response {
 		return view.ErrInternalServer(err.Error())
 	}
 
-	return view.SuccessCreated(tokString)
+	return view.SuccessLogin("LOGIN_SUCCESS", tokString)
 }
 
 func (u *UserServices) FindUserByEmail(email string) *view.Response {
