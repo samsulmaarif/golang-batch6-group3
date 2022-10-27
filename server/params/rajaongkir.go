@@ -17,7 +17,7 @@ func (rq *RajaOngkirQuery) ParseToModel() *model.Query {
 	return &model.Query{
 		Id:          rq.CityId,
 		Province:    rq.ProvinceId,
-		Origin:      rq.CityId,
+		Origin:      rq.Origin,
 		Destination: rq.Destination,
 		Weight:      rq.Weight,
 		Courier:     rq.Courier,

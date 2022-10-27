@@ -5,6 +5,8 @@ import (
 	"golang-batch6-group3/server/model"
 	"golang-batch6-group3/server/repository"
 	"net/http"
+	"strconv"
+	"strings"
 
 	"gorm.io/gorm"
 )
@@ -58,11 +60,13 @@ func (ro *rajaOngkirRepo) FindCityById(query *model.Query) (*model.RajaOngkirDef
 	return &rajaongkir, nil
 }
 
-// belom
-func (ro *rajaOngkirRepo) FindCostById(query *model.Query) (*model.RajaOngkirDefault, error) {
-	url := rootUrl + "city?id=" + query.Id + "&province=" + query.Province
-	req, _ := http.NewRequest("GET", url, nil)
+func (ro *rajaOngkirRepo) FindCost(query *model.Query) (*model.RajaOngkirDefault, error) {
+	url := rootUrl + "cost"
+	payloadUrl := "origin=" + query.Origin + "&destination=" + query.Destination + "&weight=" + strconv.Itoa(query.Weight) + "&courier=" + query.Courier
+	payload := strings.NewReader(payloadUrl)
+	req, _ := http.NewRequest("POST", url, payload)
 	req.Header.Add("key", key)
+	req.Header.Add("content-type", "application/x-www-form-urlencoded")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
 		return nil, err
@@ -72,7 +76,7 @@ func (ro *rajaOngkirRepo) FindCostById(query *model.Query) (*model.RajaOngkirDef
 	rajaongkir := model.RajaOngkirDefault{}
 	err = json.NewDecoder(resp.Body).Decode(&rajaongkir)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
 	return &rajaongkir, nil
 }

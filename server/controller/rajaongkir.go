@@ -41,3 +41,15 @@ func (ro *RajaOngkirHandler) GetCityById(c *gin.Context) {
 	resp := ro.svc.FindCityById(&req)
 	WriteJsonResponseGin(c, resp)
 }
+
+func (ro *RajaOngkirHandler) GetCost(c *gin.Context) {
+	var req params.RajaOngkirQuery
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		resp := view.ErrBadRequest(err.Error())
+		WriteJsonResponseGin(c, resp)
+		return
+	}
+	resp := ro.svc.FindCost(&req)
+	WriteJsonResponseGin(c, resp)
+}

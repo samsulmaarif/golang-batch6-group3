@@ -36,3 +36,12 @@ func (ro *RajaOngkirServices) FindCityById(req *params.RajaOngkirQuery) *view.Re
 	}
 	return view.SuccessFindAll(city)
 }
+
+func (ro *RajaOngkirServices) FindCost(req *params.RajaOngkirQuery) *view.Response {
+	query := req.ParseToModel()
+	city, err := ro.repo.FindCost(query)
+	if err != nil {
+		return view.ErrInternalServer(err.Error())
+	}
+	return view.SuccessFindAll(city)
+}

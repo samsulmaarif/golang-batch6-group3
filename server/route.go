@@ -57,6 +57,7 @@ func (r *GinRouter) Start(port string) {
 	rajaongkirs := r.router.Group("/rajaongkirs")
 	rajaongkirs.GET("/city/", r.rajaongkir.GetCityById)
 	rajaongkirs.GET("/province/", r.rajaongkir.GetProvinceById)
+	rajaongkirs.GET("/cost/", r.rajaongkir.GetCost)
 
 	r.router.Run(port)
 }

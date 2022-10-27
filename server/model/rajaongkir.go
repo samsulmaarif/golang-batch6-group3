@@ -5,10 +5,11 @@ type RajaOngkirDefault struct {
 }
 
 type RajaOngkir struct {
-	Query         Query         `json:"query"`
-	Status        Status        `json:"status"`
-	OriginDetails OriginDetails `json:"origin_details"`
-	Results       Results       `json:"results"`
+	Query              Query              `json:"query"`
+	Status             Status             `json:"status"`
+	OriginDetails      OriginDetails      `json:"origin_details"`
+	DestinationDetails DestinationDetails `json:"destination_details"`
+	Results            Results            `json:"results"`
 }
 
 type Query struct {
