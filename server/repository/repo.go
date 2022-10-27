@@ -1,6 +1,8 @@
 package repository
 
-import "golang-batch6-group3/server/model"
+import (
+	"golang-batch6-group3/server/model"
+)
 
 type UserRepo interface {
 	GetUsers() (*[]model.User, error)
@@ -23,4 +25,9 @@ type TransactionRepo interface {
 	UpdateTransactionStatusById(id string, status string) error
 	AddTransaction(transaction *model.Transaction) error
 	FindTransactionById(id string) (*model.Transaction, error)
+}
+
+type RajaOngkirRepo interface {
+	FindProvinceById(query *model.Query) (*model.RajaOngkirDefault, error)
+	FindCityById(query *model.Query) (*model.RajaOngkirDefault, error)
 }

@@ -11,15 +11,18 @@ type GinRouter struct {
 	user        *controller.UserHandler
 	product     *controller.ProductHandler
 	transaction *controller.TransactionHandler
+	rajaongkir  *controller.RajaOngkirHandler
 	middleware  *Middleware
 }
 
-func NewRouterGin(router *gin.Engine, user *controller.UserHandler, product *controller.ProductHandler, transaction *controller.TransactionHandler, middleware *Middleware) *GinRouter {
+func NewRouterGin(router *gin.Engine, user *controller.UserHandler, product *controller.ProductHandler, transaction *controller.TransactionHandler,
+	rajaongkir *controller.RajaOngkirHandler, middleware *Middleware) *GinRouter {
 	return &GinRouter{
 		router:      router,
 		user:        user,
 		product:     product,
 		transaction: transaction,
+		rajaongkir:  rajaongkir,
 		middleware:  middleware,
 	}
 }
@@ -51,24 +54,9 @@ func (r *GinRouter) Start(port string) {
 	products.PUT("/id/:Id", r.middleware.Auth, r.middleware.CheckRole(r.product.GinUpdateProduct, []string{"admin"}))
 	products.GET("/id/:Id", r.product.GetProductById)
 
+	rajaongkirs := r.router.Group("/rajaongkirs")
+	rajaongkirs.GET("/city/", r.rajaongkir.GetCityById)
+	rajaongkirs.GET("/province/", r.rajaongkir.GetProvinceById)
+
 	r.router.Run(port)
 }
-
-// package server
-
-// import (
-// 	"database/sql"
-// 	"fmt"
-// 	"net/http"
-// )
-
-// func StartServer(router *http.ServeMux, port string, db *sql.DB) {
-// 	buildRoute(router, db)
-// 	fmt.Println("Server running at ", port)
-
-// 	http.ListenAndServe(port, router)
-// }
-
-// func buildRoute(router *http.ServeMux, db *sql.DB) {
-
-// }

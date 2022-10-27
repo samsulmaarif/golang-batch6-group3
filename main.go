@@ -36,10 +36,14 @@ func run() {
 	transactionSvc := service.NewTransactionServices(transactionRepo, typicodeAdaptor)
 	transactionHandler := controller.NewTransactionHandler(transactionSvc)
 
+	rajaOngkirRepo := gorm_postgres.NewRajaOngkirRepoGormPostgres(db)
+	rajaOngkirSvc := service.NewRajaOngkirServices(rajaOngkirRepo, typicodeAdaptor)
+	rajaOngkirHandler := controller.NewRajaOngkirHandler(rajaOngkirSvc)
+
 	router := gin.Default()
 	router.Use(gin.Logger())
 
 	middleware := server.NewMiddleware(userSvc)
-	app := server.NewRouterGin(router, userHandler, productHandler, transactionHandler, middleware)
+	app := server.NewRouterGin(router, userHandler, productHandler, transactionHandler, rajaOngkirHandler, middleware)
 	app.Start(port)
 }
