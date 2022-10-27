@@ -30,5 +30,5 @@ type TransactionRepo interface {
 type RajaOngkirRepo interface {
 	FindProvinceById(query *model.Query) (*model.RajaOngkirDefault, error)
 	FindCityById(query *model.Query) (*model.RajaOngkirDefault, error)
-	FindCost(query *model.Query) (*model.RajaOngkirDefault, error)
+	FindCost(query *model.Query) (*model.RajaOngkirDefaultCost, error)
 }

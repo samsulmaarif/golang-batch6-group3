@@ -5,11 +5,9 @@ type RajaOngkirDefault struct {
 }
 
 type RajaOngkir struct {
-	Query              Query              `json:"query"`
-	Status             Status             `json:"status"`
-	OriginDetails      OriginDetails      `json:"origin_details"`
-	DestinationDetails DestinationDetails `json:"destination_details"`
-	Results            Results            `json:"results"`
+	Query   Query   `json:"query"`
+	Status  Status  `json:"status"`
+	Results Results `json:"results"`
 }
 
 type Query struct {
@@ -33,9 +31,27 @@ type Results struct {
 	Type       string `json:"type"`
 	CityName   string `json:"city_name"`
 	PostalCode string `json:"postal_code"`
-	Code       string `json:"code"`
-	Name       string `json:"name"`
-	Costs      Costs  `json:"costs"`
+}
+
+// ///////////////// Costs /////////////////////
+
+type RajaOngkirDefaultCost struct {
+	RajaOngkir RajaOngkirCost `json:"rajaongkir"`
+}
+
+type RajaOngkirCost struct {
+	Query              QueryCost          `json:"query"`
+	Status             Status             `json:"status"`
+	OriginDetails      OriginDetails      `json:"origin_details"`
+	DestinationDetails DestinationDetails `json:"destination_details"`
+	ResultsCost        []ResultsCost      `json:"results"`
+}
+
+type QueryCost struct {
+	Origin      string `json:"origin"`
+	Destination string `json:"destination"`
+	Weight      int    `json:"weight"`
+	Courier     string `json:"courier"`
 }
 
 type OriginDetails struct {
@@ -56,10 +72,16 @@ type DestinationDetails struct {
 	PostalCode string `json:"postal_code"`
 }
 
+type ResultsCost struct {
+	Code  string  `json:"code"`
+	Name  string  `json:"name"`
+	Costs []Costs `json:"costs"`
+}
+
 type Costs struct {
 	Service     string `json:"service"`
 	Description string `json:"description"`
-	Cost        Cost   `json:"cost"`
+	Cost        []Cost `json:"cost"`
 }
 
 type Cost struct {

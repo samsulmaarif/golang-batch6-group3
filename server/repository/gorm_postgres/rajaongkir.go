@@ -60,7 +60,7 @@ func (ro *rajaOngkirRepo) FindCityById(query *model.Query) (*model.RajaOngkirDef
 	return &rajaongkir, nil
 }
 
-func (ro *rajaOngkirRepo) FindCost(query *model.Query) (*model.RajaOngkirDefault, error) {
+func (ro *rajaOngkirRepo) FindCost(query *model.Query) (*model.RajaOngkirDefaultCost, error) {
 	url := rootUrl + "cost"
 	payloadUrl := "origin=" + query.Origin + "&destination=" + query.Destination + "&weight=" + strconv.Itoa(query.Weight) + "&courier=" + query.Courier
 	payload := strings.NewReader(payloadUrl)
@@ -73,7 +73,7 @@ func (ro *rajaOngkirRepo) FindCost(query *model.Query) (*model.RajaOngkirDefault
 	}
 	defer resp.Body.Close()
 
-	rajaongkir := model.RajaOngkirDefault{}
+	rajaongkir := model.RajaOngkirDefaultCost{}
 	err = json.NewDecoder(resp.Body).Decode(&rajaongkir)
 	if err != nil {
 		return nil, err
