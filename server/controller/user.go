@@ -50,7 +50,7 @@ func (u *UserHandler) GinRegister(c *gin.Context) {
 func (u *UserHandler) GinGetUserByEmail(c *gin.Context) {
 	Email, isExist := c.Params.Get("Email")
 	if !isExist {
-		WriteJsonResponseGin(c, view.ErrBadRequest("user Email not found in params"))
+		WriteJsonResponseGin(c, view.ErrBadRequest("user email not found in params"))
 		return
 	}
 

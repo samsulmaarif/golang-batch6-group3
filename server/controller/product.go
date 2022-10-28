@@ -73,7 +73,7 @@ func (p *ProductHandler) GinUpdateProduct(c *gin.Context) {
 	}
 
 	p.svc.UpdateProductById(Id, &req)
-	WriteJsonResponseGin(c, view.SuccessCreated("UPDATE_PRODUCT_SUCCESS"))
+	WriteJsonResponseGin(c, view.SuccessUpdated("UPDATE_PRODUCT_SUCCESS", req))
 }
 
 func (p *ProductHandler) GetProductById(c *gin.Context) {

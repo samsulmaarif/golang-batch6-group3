@@ -20,7 +20,16 @@ func SuccessCreated(message interface{}) *Response {
 
 func SuccessLogin(message interface{}, payload interface{}) *Response {
 	return &Response{
-		Status:      http.StatusCreated,
+		Status:      http.StatusOK,
+		Message:     message,
+		Payload:     payload,
+		GeneralInfo: "NooBee-Shop",
+	}
+}
+
+func SuccessUpdated(message interface{}, payload interface{}) *Response {
+	return &Response{
+		Status:      http.StatusOK,
 		Message:     message,
 		Payload:     payload,
 		GeneralInfo: "NooBee-Shop",
