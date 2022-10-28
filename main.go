@@ -1,7 +1,6 @@
 package main
 
 import (
-	"golang-batch6-group3/adaptor"
 	"golang-batch6-group3/db"
 	"golang-batch6-group3/server"
 	"golang-batch6-group3/server/controller"
@@ -22,22 +21,21 @@ func run() {
 	if err != nil {
 		panic(err)
 	}
-	typicodeAdaptor := adaptor.NewTypicodeAdaptor("https://jsonplaceholder.typicode.com/posts")
 
 	userRepo := gorm_postgres.NewUserRepoGormPostgres(db)
-	userSvc := service.NewUserServices(userRepo, typicodeAdaptor)
+	userSvc := service.NewUserServices(userRepo)
 	userHandler := controller.NewUserHandler(userSvc)
 
 	productRepo := gorm_postgres.NewProductRepoGormPostgres(db)
-	productSvc := service.NewProductServices(productRepo, typicodeAdaptor)
+	productSvc := service.NewProductServices(productRepo)
 	productHandler := controller.NewProductHandler(productSvc)
 
 	transactionRepo := gorm_postgres.NewTransactionRepoGormPostgres(db)
-	transactionSvc := service.NewTransactionServices(transactionRepo, typicodeAdaptor)
+	transactionSvc := service.NewTransactionServices(transactionRepo)
 	transactionHandler := controller.NewTransactionHandler(transactionSvc)
 
 	rajaOngkirRepo := gorm_postgres.NewRajaOngkirRepoGormPostgres(db)
-	rajaOngkirSvc := service.NewRajaOngkirServices(rajaOngkirRepo, typicodeAdaptor)
+	rajaOngkirSvc := service.NewRajaOngkirServices(rajaOngkirRepo)
 	rajaOngkirHandler := controller.NewRajaOngkirHandler(rajaOngkirSvc)
 
 	router := gin.Default()

@@ -2,7 +2,6 @@ package service
 
 import (
 	"database/sql"
-	"golang-batch6-group3/adaptor"
 	"golang-batch6-group3/server/params"
 	"golang-batch6-group3/server/repository"
 	"golang-batch6-group3/server/view"
@@ -13,14 +12,12 @@ import (
 )
 
 type TransactionServices struct {
-	repo            repository.TransactionRepo
-	typicodeAdaptor *adaptor.TypicodeAdaptor
+	repo repository.TransactionRepo
 }
 
-func NewTransactionServices(repo repository.TransactionRepo, typicodeAdaptor *adaptor.TypicodeAdaptor) *TransactionServices {
+func NewTransactionServices(repo repository.TransactionRepo) *TransactionServices {
 	return &TransactionServices{
-		repo:            repo,
-		typicodeAdaptor: typicodeAdaptor,
+		repo: repo,
 	}
 }
 
@@ -61,11 +58,6 @@ func (t *TransactionServices) CreateTransaction(req *params.TransactionCreate) *
 		log.Printf("get error add transaction with error %v\n", "")
 		return view.ErrInternalServer("CREATE_TRANSACTION_FAIL", err.Error())
 	}
-
-	// data, err := t.typicodeAdaptor.GetAllTypicode()
-	// if err != nil {
-	// 	return view.ErrInternalServer(err.Error())
-	// }
 
 	return view.SuccessCreated(transaction)
 }

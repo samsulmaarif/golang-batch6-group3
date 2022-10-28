@@ -2,7 +2,6 @@ package service
 
 import (
 	"database/sql"
-	"golang-batch6-group3/adaptor"
 	"golang-batch6-group3/helper"
 	"golang-batch6-group3/server/params"
 	"golang-batch6-group3/server/repository"
@@ -14,14 +13,12 @@ import (
 )
 
 type UserServices struct {
-	repo            repository.UserRepo
-	typicodeAdaptor *adaptor.TypicodeAdaptor
+	repo repository.UserRepo
 }
 
-func NewUserServices(repo repository.UserRepo, typicodeAdaptor *adaptor.TypicodeAdaptor) *UserServices {
+func NewUserServices(repo repository.UserRepo) *UserServices {
 	return &UserServices{
-		repo:            repo,
-		typicodeAdaptor: typicodeAdaptor,
+		repo: repo,
 	}
 }
 
@@ -58,11 +55,6 @@ func (u *UserServices) CreateUser(req *params.UserCreate) *view.Response {
 		log.Printf("get error register user with error %v\n", "")
 		return view.ErrInternalServer("CREATE_USERS_FAIL", err.Error())
 	}
-
-	// data, err := u.typicodeAdaptor.GetAllTypicode()
-	// if err != nil {
-	// 	return view.ErrInternalServer(err.Error())
-	// }
 
 	return view.SuccessCreated(user)
 }

@@ -2,7 +2,6 @@ package service
 
 import (
 	"database/sql"
-	"golang-batch6-group3/adaptor"
 	"golang-batch6-group3/server/params"
 	"golang-batch6-group3/server/repository"
 	"golang-batch6-group3/server/view"
@@ -13,14 +12,12 @@ import (
 )
 
 type ProductServices struct {
-	repo            repository.ProductRepo
-	typicodeAdaptor *adaptor.TypicodeAdaptor
+	repo repository.ProductRepo
 }
 
-func NewProductServices(repo repository.ProductRepo, typicodeAdaptor *adaptor.TypicodeAdaptor) *ProductServices {
+func NewProductServices(repo repository.ProductRepo) *ProductServices {
 	return &ProductServices{
-		repo:            repo,
-		typicodeAdaptor: typicodeAdaptor,
+		repo: repo,
 	}
 }
 
@@ -49,11 +46,6 @@ func (p *ProductServices) AddProduct(req *params.ProductCreate) *view.Response {
 		return view.ErrInternalServer("CREATE_PRODUCT_FAIL", err.Error())
 	}
 
-	// data, err := p.typicodeAdaptor.GetAllTypicode()
-	// if err != nil {
-	// 	return view.ErrInternalServer(err.Error())
-	// }
-
 	return view.SuccessCreated(product)
 }
 
@@ -69,7 +61,7 @@ func (p *ProductServices) DeleteProductById(id string) *view.Response {
 	return view.SuccessFindAll(delete)
 }
 
-func (p *ProductServices) UpdateProductById(id string, req *params.ProductCreate) *view.Response {
+func (p *ProductServices) UpdateProductById(id string, req *params.ProductUpdate) *view.Response {
 	product := req.ParseToModel()
 
 	err := p.repo.UpdateProductById(id, product)

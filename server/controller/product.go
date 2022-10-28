@@ -58,7 +58,7 @@ func (p *ProductHandler) GinDeleteProduct(c *gin.Context) {
 }
 
 func (p *ProductHandler) GinUpdateProduct(c *gin.Context) {
-	var req params.ProductCreate
+	var req params.ProductUpdate
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
 		resp := view.ErrBadRequest(err.Error())
@@ -72,11 +72,7 @@ func (p *ProductHandler) GinUpdateProduct(c *gin.Context) {
 		return
 	}
 
-	err2 := p.svc.UpdateProductById(Id, &req)
-	if err2 != nil {
-		WriteJsonResponseGin(c, view.ErrBadRequest("UPDATE_USER_FAIL"))
-		return
-	}
+	p.svc.UpdateProductById(Id, &req)
 	WriteJsonResponseGin(c, view.SuccessCreated("UPDATE_PRODUCT_SUCCESS"))
 }
 

@@ -5,9 +5,10 @@ import "golang-batch6-group3/server/model"
 type ProductCreateResponse struct {
 	Name        string `json:"name"`
 	Category    string `json:"category"`
+	Weight      int    `json:"weight"`
 	Description string `json:"description"`
-	Price       string `json:"price"`
-	Stock       string `json:"stock"`
+	Price       int    `json:"price"`
+	Stock       int    `json:"stock"`
 	ImgUrl      string `json:"img_url"`
 }
 
@@ -15,6 +16,7 @@ func NewProductCreateResponse(product *model.Product) *ProductCreateResponse {
 	return &ProductCreateResponse{
 		Name:        product.Name,
 		Category:    product.Category,
+		Weight:      product.Weight,
 		Description: product.Description,
 		Price:       product.Price,
 		Stock:       product.Stock,
@@ -25,9 +27,10 @@ func NewProductCreateResponse(product *model.Product) *ProductCreateResponse {
 type ProductFindAllResponse struct {
 	Name        string `json:"name"`
 	Category    string `json:"category"`
+	Weight      int    `json:"weight"`
 	Description string `json:"description"`
-	Price       string `json:"price"`
-	Stock       string `json:"stock"`
+	Price       int    `json:"price"`
+	Stock       int    `json:"stock"`
 	ImgUrl      string `json:"img_url"`
 }
 
@@ -43,6 +46,7 @@ func parseModelToProductFind(product *model.Product) *ProductFindAllResponse {
 	return &ProductFindAllResponse{
 		Name:        product.Name,
 		Category:    product.Category,
+		Weight:      product.Weight,
 		Description: product.Description,
 		Price:       product.Price,
 		Stock:       product.Stock,

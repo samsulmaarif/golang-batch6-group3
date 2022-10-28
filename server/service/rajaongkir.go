@@ -1,21 +1,18 @@
 package service
 
 import (
-	"golang-batch6-group3/adaptor"
 	"golang-batch6-group3/server/params"
 	"golang-batch6-group3/server/repository"
 	"golang-batch6-group3/server/view"
 )
 
 type RajaOngkirServices struct {
-	repo            repository.RajaOngkirRepo
-	typicodeAdaptor *adaptor.TypicodeAdaptor
+	repo repository.RajaOngkirRepo
 }
 
-func NewRajaOngkirServices(repo repository.RajaOngkirRepo, typicodeAdaptor *adaptor.TypicodeAdaptor) *RajaOngkirServices {
+func NewRajaOngkirServices(repo repository.RajaOngkirRepo) *RajaOngkirServices {
 	return &RajaOngkirServices{
-		repo:            repo,
-		typicodeAdaptor: typicodeAdaptor,
+		repo: repo,
 	}
 }
 
