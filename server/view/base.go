@@ -13,55 +13,62 @@ type Response struct {
 func SuccessCreated(message interface{}) *Response {
 	return &Response{
 		Status:      http.StatusCreated,
-		Message:     message,
+		Message:     "REGISTER_SUCCESS",
 		GeneralInfo: "NooBee-Shop",
 	}
 }
 
 func SuccessLogin(message interface{}, payload interface{}) *Response {
 	return &Response{
-		Status:  http.StatusCreated,
-		Message: message,
-		Payload: payload,
+		Status:      http.StatusCreated,
+		Message:     message,
+		Payload:     payload,
+		GeneralInfo: "NooBee-Shop",
 	}
 }
 
 func SuccessDeleted(message interface{}) *Response {
 	return &Response{
-		Status:  http.StatusCreated,
-		Message: message,
+		Status:      http.StatusCreated,
+		Message:     message,
+		GeneralInfo: "NooBee-Shop",
 	}
 }
 
 func SuccessFindAll(payload interface{}) *Response {
 	return &Response{
-		Status:  http.StatusOK,
-		Payload: payload,
+		Status:      http.StatusOK,
+		Payload:     payload,
+		GeneralInfo: "NooBee-Shop",
 	}
 }
 
 func ErrBadRequest(err interface{}) *Response {
 	return &Response{
-		Status: http.StatusBadRequest,
-		Error:  err,
+		Status:      http.StatusBadRequest,
+		GeneralInfo: "NooBee-Shop",
+		Error:       err,
 	}
 }
 
 func ErrInternalServer(err interface{}) *Response {
 	return &Response{
-		Status: http.StatusInternalServerError,
-		Error:  err,
+		Status:      http.StatusInternalServerError,
+		Error:       err,
+		GeneralInfo: "NooBee-Shop",
 	}
 }
 func ErrNotFound() *Response {
 	return &Response{
-		Status: http.StatusNotFound,
-		Error:  "NO_DATA",
+		Status:      http.StatusNotFound,
+		Error:       "NO_DATA",
+		GeneralInfo: "NooBee-Shop",
 	}
 }
 func ErrUnauthorized() *Response {
 	return &Response{
-		Status: http.StatusUnauthorized,
-		Error:  "UNAUTHORIZED",
+		Status:      http.StatusUnauthorized,
+		Error:       "UNAUTHORIZED",
+		GeneralInfo: "NooBee-Shop",
 	}
 }

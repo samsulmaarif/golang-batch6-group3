@@ -16,7 +16,7 @@ func main() {
 }
 
 func run() {
-	port := ":6000"
+	port := ":8000"
 
 	db, err := db.ConnectGormDB()
 	if err != nil {
