@@ -31,7 +31,7 @@ func (u *UserServices) GetUsers() *view.Response {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("GET_ALL_USERS_FAIL", err.Error())
 	}
 
 	return view.SuccessFindAll(view.NewUserFindAllResponse(users))
@@ -48,7 +48,7 @@ func (u *UserServices) CreateUser(req *params.UserCreate) *view.Response {
 	hash, err := helper.GeneratePassword(user.Password)
 	if err != nil {
 		log.Printf("get error when try to generate password %v\n", "")
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("CREATE_USERS_FAIL", err.Error())
 	}
 
 	user.Password = hash
@@ -56,7 +56,7 @@ func (u *UserServices) CreateUser(req *params.UserCreate) *view.Response {
 	err = u.repo.Register(user)
 	if err != nil {
 		log.Printf("get error register user with error %v\n", "")
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("CREATE_USERS_FAIL", err.Error())
 	}
 
 	// data, err := u.typicodeAdaptor.GetAllTypicode()
@@ -75,7 +75,7 @@ func (u *UserServices) UpdateProfile(email string, req *params.UserCreate) *view
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("UPDATE_USER_FAIL", err.Error())
 	}
 
 	return view.SuccessCreated("UPDATE_USER_SUCCESS")
@@ -87,7 +87,7 @@ func (u *UserServices) Login(req *params.UserLogin) *view.Response {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("LOGIN_FAIL", err.Error())
 	}
 
 	err = helper.ValidatePassword(user.Password, req.Password)
@@ -102,7 +102,7 @@ func (u *UserServices) Login(req *params.UserLogin) *view.Response {
 
 	tokString, err := helper.CreateToken(&token)
 	if err != nil {
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("LOGIN_FAIL", err.Error())
 	}
 
 	return view.SuccessLogin("LOGIN_SUCCESS", tokString)
@@ -114,7 +114,7 @@ func (u *UserServices) FindUserByEmail(email string) *view.Response {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("FIND_USER_FAIL", err.Error())
 	}
 	return view.SuccessFindAll(user)
 }

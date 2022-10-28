@@ -51,7 +51,7 @@ func ErrBadRequest(err interface{}) *Response {
 	}
 }
 
-func ErrInternalServer(err interface{}) *Response {
+func ErrInternalServer(message interface{}, err interface{}) *Response {
 	return &Response{
 		Status:      http.StatusInternalServerError,
 		Error:       err,

@@ -30,7 +30,7 @@ func (p *ProductServices) GetProducts() *view.Response {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("GET_PRODUCT_FAIL", err.Error())
 	}
 
 	return view.SuccessFindAll(view.NewProductFindAllResponse(products))
@@ -46,7 +46,7 @@ func (p *ProductServices) AddProduct(req *params.ProductCreate) *view.Response {
 	err := p.repo.AddProduct(product)
 	if err != nil {
 		log.Printf("get error register user with error %v\n", "")
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("CREATE_PRODUCT_FAIL", err.Error())
 	}
 
 	// data, err := p.typicodeAdaptor.GetAllTypicode()
@@ -63,7 +63,7 @@ func (p *ProductServices) DeleteProductById(id string) *view.Response {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("DELETE_PRODUCT_FAIL", err.Error())
 	}
 
 	return view.SuccessFindAll(delete)
@@ -77,7 +77,7 @@ func (p *ProductServices) UpdateProductById(id string, req *params.ProductCreate
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("UPDATE_PRODUCT_FAIL", err.Error())
 	}
 
 	return view.SuccessFindAll("UPDATE_PRODUCT_SUCCESS")
@@ -89,7 +89,7 @@ func (p *ProductServices) FindProductById(id string) *view.Response {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("FIND_PRODUCT_FAIL", err.Error())
 	}
 	return view.SuccessFindAll(product)
 }

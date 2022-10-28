@@ -30,7 +30,7 @@ func (t *TransactionServices) GetTransactions() *view.Response {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("GET_TRANSACTION_FAIL", err.Error())
 	}
 
 	return view.SuccessFindAll(view.NewTransactionFindAllResponse(transactions))
@@ -42,7 +42,7 @@ func (t *TransactionServices) GetMemberTransactions(id string) *view.Response {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("GET_MEMBER_TRANSACTION_FAIL", err.Error())
 	}
 
 	return view.SuccessFindAll(view.NewTransactionFindAllResponse(transactions))
@@ -59,7 +59,7 @@ func (t *TransactionServices) CreateTransaction(req *params.TransactionCreate) *
 	err := t.repo.AddTransaction(transaction)
 	if err != nil {
 		log.Printf("get error add transaction with error %v\n", "")
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("CREATE_TRANSACTION_FAIL", err.Error())
 	}
 
 	// data, err := t.typicodeAdaptor.GetAllTypicode()
@@ -76,7 +76,7 @@ func (t *TransactionServices) UpdateTransactionStatusById(id string, status stri
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("UPDATE_TRANSACTION_FAIL", err.Error())
 	}
 	return view.SuccessFindAll("UPDATE_PRODUCT_SUCCESS")
 }
@@ -87,7 +87,7 @@ func (u *TransactionServices) FindTransactionById(id string) *view.Response {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer(err.Error())
+		return view.ErrInternalServer("FIND_TRANSACTION_FAIL", err.Error())
 	}
 	return view.SuccessFindAll(transaction)
 }
