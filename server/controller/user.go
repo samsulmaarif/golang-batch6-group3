@@ -47,6 +47,16 @@ func (u *UserHandler) GinRegister(c *gin.Context) {
 	WriteJsonResponseGin(c, resp)
 }
 
+func (u *UserHandler) GinDeleteUser(c *gin.Context) {
+	Id, isExist := c.Params.Get("Id")
+	if !isExist {
+		WriteJsonResponseGin(c, view.ErrBadRequest("user Id not found in params"))
+		return
+	}
+	u.svc.DeleteUserById(Id)
+	WriteJsonResponseGin(c, view.SuccessDeleted("DELETE_USER_SUCCESS"))
+}
+
 func (u *UserHandler) GinGetUserByEmail(c *gin.Context) {
 	Email, isExist := c.Params.Get("Email")
 	if !isExist {
@@ -55,6 +65,17 @@ func (u *UserHandler) GinGetUserByEmail(c *gin.Context) {
 	}
 
 	resp := u.svc.FindUserByEmail(Email)
+	WriteJsonResponseGin(c, resp)
+}
+
+func (u *UserHandler) GinGetUserById(c *gin.Context) {
+	Id, isExist := c.Params.Get("Id")
+	if !isExist {
+		WriteJsonResponseGin(c, view.ErrBadRequest("user Id not found in params"))
+		return
+	}
+
+	resp := u.svc.FindUserById(Id)
 	WriteJsonResponseGin(c, resp)
 }
 

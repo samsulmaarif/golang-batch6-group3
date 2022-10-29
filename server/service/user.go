@@ -100,8 +100,31 @@ func (u *UserServices) Login(req *params.UserLogin) *view.Response {
 	return view.SuccessLogin("LOGIN_SUCCESS", tokString)
 }
 
+func (u *UserServices) DeleteUserById(id string) *view.Response {
+	delete, err := u.repo.DeleteUserById(id)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return view.ErrNotFound()
+		}
+		return view.ErrInternalServer("DELETE_USER_FAIL", err.Error())
+	}
+
+	return view.SuccessFindAll(delete)
+}
+
 func (u *UserServices) FindUserByEmail(email string) *view.Response {
 	user, err := u.repo.FindUserByEmail(email)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return view.ErrNotFound()
+		}
+		return view.ErrInternalServer("FIND_USER_FAIL", err.Error())
+	}
+	return view.SuccessFindAll(user)
+}
+
+func (u *UserServices) FindUserById(id string) *view.Response {
+	user, err := u.repo.FindUserById(id)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()

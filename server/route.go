@@ -34,6 +34,8 @@ func (r *GinRouter) Start(port string) {
 	users.GET("/", r.middleware.Auth, r.middleware.CheckRole(r.user.GinGetUsers, []string{"admin"}))
 	users.GET("/email/:Email", r.middleware.Auth, r.middleware.CheckRole(r.user.GinGetUserByEmail, []string{"admin"}))
 	users.PUT("/profile", r.middleware.Auth, r.middleware.CheckRole(r.user.GinUpdateUserProfile, []string{"admin", "member"}))
+	users.DELETE("/id/:Id", r.middleware.Auth, r.middleware.CheckRole(r.user.GinDeleteUser, []string{"admin"}))
+	users.GET("/id/:Id", r.middleware.Auth, r.middleware.CheckRole(r.user.GinGetUserById, []string{"admin"}))
 
 	auth := r.router.Group("/auth")
 	auth.POST("/login", r.user.GinLogin)
