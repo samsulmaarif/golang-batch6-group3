@@ -101,15 +101,26 @@ func (u *UserServices) Login(req *params.UserLogin) *view.Response {
 }
 
 func (u *UserServices) DeleteUserById(id string) *view.Response {
-	delete, err := u.repo.DeleteUserById(id)
+	user, err := u.repo.FindUserById(id)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer("DELETE_USER_FAIL", err.Error())
+		return view.ErrInternalServer("FIND_USER_FAIL", err.Error())
 	}
 
-	return view.SuccessFindAll(delete)
+	if user != nil {
+		delete, err := u.repo.DeleteUserById(id)
+		if err != nil {
+			if err == sql.ErrNoRows {
+				return view.ErrNotFound()
+			}
+			return view.ErrInternalServer("DELETE_USER_FAIL", err.Error())
+		}
+
+		return view.SuccessFindAll(delete)
+	}
+	return nil
 }
 
 func (u *UserServices) FindUserByEmail(email string) *view.Response {

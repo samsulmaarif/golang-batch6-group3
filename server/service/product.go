@@ -50,15 +50,25 @@ func (p *ProductServices) AddProduct(req *params.ProductCreate) *view.Response {
 }
 
 func (p *ProductServices) DeleteProductById(id string) *view.Response {
-	delete, err := p.repo.DeleteProductById(id)
+	product, err := p.repo.FindProductById(id)
 	if err != nil {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer("DELETE_PRODUCT_FAIL", err.Error())
+		return view.ErrInternalServer("FIND_PRODUCT_FAIL", err.Error())
 	}
+	if product != nil {
+		delete, err := p.repo.DeleteProductById(id)
+		if err != nil {
+			if err == sql.ErrNoRows {
+				return view.ErrNotFound()
+			}
+			return view.ErrInternalServer("DELETE_PRODUCT_FAIL", err.Error())
+		}
 
-	return view.SuccessFindAll(delete)
+		return view.SuccessFindAll(delete)
+	}
+	return nil
 }
 
 func (p *ProductServices) UpdateProductById(id string, req *params.ProductUpdate) *view.Response {

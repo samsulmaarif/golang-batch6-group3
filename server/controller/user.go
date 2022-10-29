@@ -53,8 +53,8 @@ func (u *UserHandler) GinDeleteUser(c *gin.Context) {
 		WriteJsonResponseGin(c, view.ErrBadRequest("user Id not found in params"))
 		return
 	}
-	u.svc.DeleteUserById(Id)
-	WriteJsonResponseGin(c, view.SuccessDeleted("DELETE_USER_SUCCESS"))
+	resp := u.svc.DeleteUserById(Id)
+	WriteJsonResponseGin(c, resp)
 }
 
 func (u *UserHandler) GinGetUserByEmail(c *gin.Context) {
