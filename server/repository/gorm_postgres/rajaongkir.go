@@ -24,8 +24,8 @@ func NewRajaOngkirRepoGormPostgres(db *gorm.DB) repository.RajaOngkirRepo {
 var rootUrl = "https://api.rajaongkir.com/starter/"
 var key = "8ed7415f889eb79a249d1e38c6759377"
 
-func (ro *rajaOngkirRepo) FindProvinceById(query *model.Query) (*model.RajaOngkirDefault, error) {
-	url := rootUrl + "province?id=" + query.Province
+func (ro *rajaOngkirRepo) FindProvinceById(query *model.QueryProvince) (*model.RajaOngkirDefaultProvince, error) {
+	url := rootUrl + "province?id=" + query.Id
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Add("key", key)
 	resp, err := http.DefaultClient.Do(req)
@@ -34,7 +34,7 @@ func (ro *rajaOngkirRepo) FindProvinceById(query *model.Query) (*model.RajaOngki
 	}
 	defer resp.Body.Close()
 
-	rajaongkir := model.RajaOngkirDefault{}
+	rajaongkir := model.RajaOngkirDefaultProvince{}
 	err = json.NewDecoder(resp.Body).Decode(&rajaongkir)
 	if err != nil {
 		return nil, err
@@ -42,7 +42,7 @@ func (ro *rajaOngkirRepo) FindProvinceById(query *model.Query) (*model.RajaOngki
 	return &rajaongkir, nil
 }
 
-func (ro *rajaOngkirRepo) FindCityById(query *model.Query) (*model.RajaOngkirDefault, error) {
+func (ro *rajaOngkirRepo) FindCityById(query *model.QueryCity) (*model.RajaOngkirDefaultCity, error) {
 	url := rootUrl + "city?id=" + query.Id + "&province=" + query.Province
 	req, _ := http.NewRequest("GET", url, nil)
 	req.Header.Add("key", key)
@@ -52,7 +52,7 @@ func (ro *rajaOngkirRepo) FindCityById(query *model.Query) (*model.RajaOngkirDef
 	}
 	defer resp.Body.Close()
 
-	rajaongkir := model.RajaOngkirDefault{}
+	rajaongkir := model.RajaOngkirDefaultCity{}
 	err = json.NewDecoder(resp.Body).Decode(&rajaongkir)
 	if err != nil {
 		return nil, err
@@ -60,7 +60,7 @@ func (ro *rajaOngkirRepo) FindCityById(query *model.Query) (*model.RajaOngkirDef
 	return &rajaongkir, nil
 }
 
-func (ro *rajaOngkirRepo) FindCost(query *model.Query) (*model.RajaOngkirDefaultCost, error) {
+func (ro *rajaOngkirRepo) FindCost(query *model.QueryCost) (*model.RajaOngkirDefaultCost, error) {
 	url := rootUrl + "cost"
 	payloadUrl := "origin=" + query.Origin + "&destination=" + query.Destination + "&weight=" + strconv.Itoa(query.Weight) + "&courier=" + query.Courier
 	payload := strings.NewReader(payloadUrl)

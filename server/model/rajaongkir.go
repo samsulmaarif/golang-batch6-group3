@@ -1,36 +1,56 @@
 package model
 
-type RajaOngkirDefault struct {
-	RajaOngkir RajaOngkir `json:"rajaongkir"`
-}
-
-type RajaOngkir struct {
-	Query   Query   `json:"query"`
-	Status  Status  `json:"status"`
-	Results Results `json:"results"`
-}
-
-type Query struct {
-	Id          string `json:"id"`
-	Province    string `json:"province"`
-	Origin      string `json:"origin"`
-	Destination string `json:"destination"`
-	Weight      int    `json:"weight"`
-	Courier     string `json:"courier"`
-}
+// ///////////////// Global /////////////////////
 
 type Status struct {
 	Code        int    `json:"code"`
 	Description string `json:"description"`
 }
 
-type Results struct {
+// ///////////////// City /////////////////////
+type RajaOngkirDefaultCity struct {
+	RajaOngkir RajaOngkirCity `json:"rajaongkir"`
+}
+
+type RajaOngkirCity struct {
+	Query   QueryCity   `json:"query"`
+	Status  Status      `json:"status"`
+	Results ResultsCity `json:"results"`
+}
+
+type QueryCity struct {
+	Id       string `json:"id"`
+	Province string `json:"province"`
+}
+
+type ResultsCity struct {
 	CityId     string `json:"city_id"`
 	ProvinceId string `json:"province_id"`
 	Province   string `json:"province"`
 	Type       string `json:"type"`
 	CityName   string `json:"city_name"`
 	PostalCode string `json:"postal_code"`
+}
+
+// ///////////////// Province /////////////////////
+
+type RajaOngkirDefaultProvince struct {
+	RajaOngkir RajaOngkirProvince `json:"rajaongkir"`
+}
+
+type RajaOngkirProvince struct {
+	Query   QueryProvince   `json:"query"`
+	Status  Status          `json:"status"`
+	Results ResultsProvince `json:"results"`
+}
+
+type QueryProvince struct {
+	Id string `json:"id"`
+}
+
+type ResultsProvince struct {
+	ProvinceId string `json:"province_id"`
+	Province   string `json:"province"`
 }
 
 // ///////////////// Costs /////////////////////

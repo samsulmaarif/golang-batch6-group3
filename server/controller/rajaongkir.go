@@ -19,7 +19,7 @@ func NewRajaOngkirHandler(svc *service.RajaOngkirServices) *RajaOngkirHandler {
 }
 
 func (ro *RajaOngkirHandler) GetProvinceById(c *gin.Context) {
-	var req params.RajaOngkirQuery
+	var req params.RajaOngkirQueryProvince
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
 		resp := view.ErrBadRequest(err.Error())
@@ -31,7 +31,7 @@ func (ro *RajaOngkirHandler) GetProvinceById(c *gin.Context) {
 }
 
 func (ro *RajaOngkirHandler) GetCityById(c *gin.Context) {
-	var req params.RajaOngkirQuery
+	var req params.RajaOngkirQueryCity
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
 		resp := view.ErrBadRequest(err.Error())
@@ -43,7 +43,7 @@ func (ro *RajaOngkirHandler) GetCityById(c *gin.Context) {
 }
 
 func (ro *RajaOngkirHandler) GetCost(c *gin.Context) {
-	var req params.RajaOngkirQuery
+	var req params.RajaOngkirQueryCost
 	err := c.ShouldBindJSON(&req)
 	if err != nil {
 		resp := view.ErrBadRequest(err.Error())

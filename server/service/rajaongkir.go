@@ -16,7 +16,7 @@ func NewRajaOngkirServices(repo repository.RajaOngkirRepo) *RajaOngkirServices {
 	}
 }
 
-func (ro *RajaOngkirServices) FindProvinceById(req *params.RajaOngkirQuery) *view.Response {
+func (ro *RajaOngkirServices) FindProvinceById(req *params.RajaOngkirQueryProvince) *view.Response {
 	query := req.ParseToModel()
 	province, err := ro.repo.FindProvinceById(query)
 	if err != nil {
@@ -25,7 +25,7 @@ func (ro *RajaOngkirServices) FindProvinceById(req *params.RajaOngkirQuery) *vie
 	return view.SuccessFindAll(province)
 }
 
-func (ro *RajaOngkirServices) FindCityById(req *params.RajaOngkirQuery) *view.Response {
+func (ro *RajaOngkirServices) FindCityById(req *params.RajaOngkirQueryCity) *view.Response {
 	query := req.ParseToModel()
 	city, err := ro.repo.FindCityById(query)
 	if err != nil {
@@ -34,7 +34,7 @@ func (ro *RajaOngkirServices) FindCityById(req *params.RajaOngkirQuery) *view.Re
 	return view.SuccessFindAll(city)
 }
 
-func (ro *RajaOngkirServices) FindCost(req *params.RajaOngkirQuery) *view.Response {
+func (ro *RajaOngkirServices) FindCost(req *params.RajaOngkirQueryCost) *view.Response {
 	query := req.ParseToModel()
 	city, err := ro.repo.FindCost(query)
 	if err != nil {
