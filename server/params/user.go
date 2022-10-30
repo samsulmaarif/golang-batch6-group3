@@ -16,6 +16,7 @@ type UserCreate struct {
 	Street     string `validate:"required"`
 	CityId     int    `validate:"required"`
 	ProvinceId int    `validate:"required"`
+	Role       string
 }
 
 func Validate(u interface{}) error {
@@ -50,5 +51,6 @@ func (u *UserCreate) ParseToModel() *model.User {
 		Street:     u.Street,
 		CityId:     u.CityId,
 		ProvinceId: u.ProvinceId,
+		Role:       u.Role,
 	}
 }

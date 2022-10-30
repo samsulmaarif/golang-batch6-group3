@@ -59,6 +59,30 @@ func (u *UserServices) CreateUser(req *params.UserCreate) *view.Response {
 	return view.SuccessCreated(user)
 }
 
+func (u *UserServices) AddUser(req *params.UserCreate) *view.Response {
+	user := req.ParseToModel()
+
+	user.Id = uuid.NewString()
+	user.CreatedAt = time.Now()
+	user.UpdatedAt = time.Now()
+
+	hash, err := helper.GeneratePassword(user.Password)
+	if err != nil {
+		log.Printf("get error when try to generate password %v\n", "")
+		return view.ErrInternalServer("ADDS_USERS_FAIL", err.Error())
+	}
+
+	user.Password = hash
+
+	err = u.repo.Register(user)
+	if err != nil {
+		log.Printf("get error register user with error %v\n", "")
+		return view.ErrInternalServer("CREATE_USERS_FAIL", err.Error())
+	}
+
+	return view.SuccessCreated(user)
+}
+
 func (u *UserServices) UpdateProfile(email string, req *params.UserCreate) *view.Response {
 	user := req.ParseToModel()
 

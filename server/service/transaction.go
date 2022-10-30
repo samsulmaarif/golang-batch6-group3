@@ -12,12 +12,14 @@ import (
 )
 
 type TransactionServices struct {
-	repo repository.TransactionRepo
+	repo     repository.TransactionRepo
+	repoProd repository.ProductRepo
 }
 
-func NewTransactionServices(repo repository.TransactionRepo) *TransactionServices {
+func NewTransactionServices(repo repository.TransactionRepo, repoProd repository.ProductRepo) *TransactionServices {
 	return &TransactionServices{
-		repo: repo,
+		repo:     repo,
+		repoProd: repoProd,
 	}
 }
 
@@ -39,7 +41,7 @@ func (t *TransactionServices) GetMemberTransactions(id string) *view.Response {
 		if err == sql.ErrNoRows {
 			return view.ErrNotFound()
 		}
-		return view.ErrInternalServer("GET_MEMBER_TRANSACTION_FAIL", err.Error())
+		return view.ErrInternalServer("GET_TRANSACTION_FAIL", err.Error())
 	}
 
 	return view.SuccessFindAll(view.NewTransactionFindAllResponse(transactions))
@@ -47,13 +49,21 @@ func (t *TransactionServices) GetMemberTransactions(id string) *view.Response {
 
 func (t *TransactionServices) CreateTransaction(req *params.TransactionCreate) *view.Response {
 	transaction := req.ParseToModel()
+	product, err := t.repoProd.FindProductById(transaction.ProductId)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return view.ErrNotFound()
+		}
+		return view.ErrInternalServer("GET_PRODUCT_FAIL", err.Error())
+	}
 
 	transaction.Id = uuid.NewString()
 	transaction.CreatedAt = time.Now()
 	transaction.UpdatedAt = time.Now()
+	transaction.Total = (req.Quantity * req.Ongkir) + (req.Quantity * product.Price)
 	transaction.Status = "pending"
 
-	err := t.repo.AddTransaction(transaction)
+	err = t.repo.AddTransaction(transaction)
 	if err != nil {
 		log.Printf("get error add transaction with error %v\n", "")
 		return view.ErrInternalServer("CREATE_TRANSACTION_FAIL", err.Error())

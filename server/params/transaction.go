@@ -12,6 +12,7 @@ type TransactionCreate struct {
 	UserId    string `validate:"required"`
 	ProductId string `validate:"required"`
 	Status    string
+	Total     int
 }
 
 type TransactionStatus struct {

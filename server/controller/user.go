@@ -47,6 +47,26 @@ func (u *UserHandler) GinRegister(c *gin.Context) {
 	WriteJsonResponseGin(c, resp)
 }
 
+func (u *UserHandler) GinAddUser(c *gin.Context) {
+	var req params.UserCreate
+	err := c.ShouldBindJSON(&req)
+	if err != nil {
+		resp := view.ErrBadRequest(err.Error())
+		WriteJsonResponseGin(c, resp)
+		return
+	}
+
+	err = params.Validate(req)
+	if err != nil {
+		resp := view.ErrBadRequest(err.Error())
+		WriteJsonResponseGin(c, resp)
+		return
+	}
+
+	resp := u.svc.AddUser(&req)
+	WriteJsonResponseGin(c, resp)
+}
+
 func (u *UserHandler) GinDeleteUser(c *gin.Context) {
 	Id, isExist := c.Params.Get("Id")
 	if !isExist {

@@ -31,7 +31,7 @@ func run() {
 	productHandler := controller.NewProductHandler(productSvc)
 
 	transactionRepo := gorm_postgres.NewTransactionRepoGormPostgres(db)
-	transactionSvc := service.NewTransactionServices(transactionRepo)
+	transactionSvc := service.NewTransactionServices(transactionRepo, productRepo)
 	transactionHandler := controller.NewTransactionHandler(transactionSvc)
 
 	rajaOngkirRepo := gorm_postgres.NewRajaOngkirRepoGormPostgres(db)

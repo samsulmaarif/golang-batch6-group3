@@ -36,6 +36,7 @@ func (r *GinRouter) Start(port string) {
 	users.PUT("/profile", r.middleware.Auth, r.middleware.CheckRole(r.user.GinUpdateUserProfile, []string{"admin", "member"}))
 	users.DELETE("/id/:Id", r.middleware.Auth, r.middleware.CheckRole(r.user.GinDeleteUser, []string{"admin"}))
 	users.GET("/id/:Id", r.middleware.Auth, r.middleware.CheckRole(r.user.GinGetUserById, []string{"admin"}))
+	users.POST("/add", r.middleware.Auth, r.middleware.CheckRole(r.user.GinAddUser, []string{"admin"}))
 
 	auth := r.router.Group("/auth")
 	auth.POST("/login", r.user.GinLogin)
@@ -43,8 +44,8 @@ func (r *GinRouter) Start(port string) {
 
 	transactions := r.router.Group("/transactions")
 	transactions.GET("/all", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinGetTransactions, []string{"admin"}))
-	transactions.PUT("/package/:Id", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinPackageTransactions, []string{"admin"}))
-	transactions.PUT("/send/:Id", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinSendTransactions, []string{"admin"}))
+	transactions.PUT("/package/:Id", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinPackageTransactions, []string{"admin", "kasir"}))
+	transactions.PUT("/send/:Id", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinSendTransactions, []string{"admin", "kasir"}))
 	transactions.PUT("/confirm/:Id", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinConfirmTransactions, []string{"member"}))
 	transactions.GET("/", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinGetMemberTransactions, []string{"member"}))
 	transactions.POST("/add", r.middleware.Auth, r.middleware.CheckRole(r.transaction.GinAddTransaction, []string{"member"}))

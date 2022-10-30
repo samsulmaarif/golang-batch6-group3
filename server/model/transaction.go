@@ -9,6 +9,7 @@ type Transaction struct {
 	UserId    string `json:"user_id"`
 	ProductId string `json:"product_id"`
 	Status    string `json:"status"`
+	Total     int    `json:"total"`
 
 	User    User    `json:"user"`
 	Product Product `json:"product"`
