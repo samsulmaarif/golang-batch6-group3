@@ -32,7 +32,7 @@ func (t *TransactionServices) GetTransactions() *view.Response {
 		return view.ErrInternalServer("GET_TRANSACTION_FAIL", err.Error())
 	}
 
-	return view.SuccessFindAll(view.NewTransactionFindAllResponse(transactions))
+	return view.SuccessFindAll("GET_TRANSACTION_SUCCESS", view.NewTransactionFindAllResponse(transactions))
 }
 
 func (t *TransactionServices) GetMemberTransactions(id string) *view.Response {
@@ -44,7 +44,7 @@ func (t *TransactionServices) GetMemberTransactions(id string) *view.Response {
 		return view.ErrInternalServer("GET_TRANSACTION_FAIL", err.Error())
 	}
 
-	return view.SuccessFindAll(view.NewTransactionFindAllResponse(transactions))
+	return view.SuccessFindAll("GET_TRANSACTION_SUCCESS", view.NewTransactionFindAllResponse(transactions))
 }
 
 func (t *TransactionServices) CreateTransaction(req *params.TransactionCreate) *view.Response {
@@ -69,7 +69,7 @@ func (t *TransactionServices) CreateTransaction(req *params.TransactionCreate) *
 		return view.ErrInternalServer("CREATE_TRANSACTION_FAIL", err.Error())
 	}
 
-	return view.SuccessCreated(transaction)
+	return view.SuccessAdd("ADD_TRANSACTION_SUCCESS", transaction)
 }
 
 func (t *TransactionServices) UpdateTransactionStatusById(id string, status string) *view.Response {
@@ -80,7 +80,7 @@ func (t *TransactionServices) UpdateTransactionStatusById(id string, status stri
 		}
 		return view.ErrInternalServer("UPDATE_TRANSACTION_FAIL", err.Error())
 	}
-	return view.SuccessFindAll("UPDATE_PRODUCT_SUCCESS")
+	return view.SuccessUpdated("UPDATE_TRANSACTION_SUCCESS", "UPDATE_TRANSACTION_SUCCESS")
 }
 
 func (u *TransactionServices) FindTransactionById(id string) *view.Response {
@@ -91,5 +91,5 @@ func (u *TransactionServices) FindTransactionById(id string) *view.Response {
 		}
 		return view.ErrInternalServer("FIND_TRANSACTION_FAIL", err.Error())
 	}
-	return view.SuccessFindAll(transaction)
+	return view.SuccessFindAll("FIND_TRANSACTION_SUCCESS", transaction)
 }

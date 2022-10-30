@@ -31,7 +31,7 @@ func (u *UserServices) GetUsers() *view.Response {
 		return view.ErrInternalServer("GET_ALL_USERS_FAIL", err.Error())
 	}
 
-	return view.SuccessFindAll(view.NewUserFindAllResponse(users))
+	return view.SuccessFindAll("GET_ALL_USERS_SUCCESS", view.NewUserFindAllResponse(users))
 }
 
 func (u *UserServices) CreateUser(req *params.UserCreate) *view.Response {
@@ -142,7 +142,7 @@ func (u *UserServices) DeleteUserById(id string) *view.Response {
 			return view.ErrInternalServer("DELETE_USER_FAIL", err.Error())
 		}
 
-		return view.SuccessFindAll(delete)
+		return view.SuccessFindAll("DELETE_USER_SUCCESS", delete)
 	}
 	return nil
 }
@@ -155,7 +155,7 @@ func (u *UserServices) FindUserByEmail(email string) *view.Response {
 		}
 		return view.ErrInternalServer("FIND_USER_FAIL", err.Error())
 	}
-	return view.SuccessFindAll(user)
+	return view.SuccessFindAll("FIND_USER_SUCCESS", user)
 }
 
 func (u *UserServices) FindUserById(id string) *view.Response {
@@ -166,5 +166,5 @@ func (u *UserServices) FindUserById(id string) *view.Response {
 		}
 		return view.ErrInternalServer("FIND_USER_FAIL", err.Error())
 	}
-	return view.SuccessFindAll(user)
+	return view.SuccessFindAll("FIND_USER_SUCCESS", user)
 }

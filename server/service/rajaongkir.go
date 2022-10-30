@@ -22,7 +22,7 @@ func (ro *RajaOngkirServices) FindProvinceById(req *params.RajaOngkirQueryProvin
 	if err != nil {
 		return view.ErrInternalServer("FIND_PROVINCE_FAIL", err.Error())
 	}
-	return view.SuccessFindAll(province)
+	return view.SuccessFindAll("FIND_PROVINCE_SUCCESS", province)
 }
 
 func (ro *RajaOngkirServices) FindCityById(req *params.RajaOngkirQueryCity) *view.Response {
@@ -31,7 +31,7 @@ func (ro *RajaOngkirServices) FindCityById(req *params.RajaOngkirQueryCity) *vie
 	if err != nil {
 		return view.ErrInternalServer("FIND_CITY_FAIL", err.Error())
 	}
-	return view.SuccessFindAll(city)
+	return view.SuccessFindAll("FIND_CITY_SUCCESS", city)
 }
 
 func (ro *RajaOngkirServices) FindCost(req *params.RajaOngkirQueryCost) *view.Response {
@@ -40,5 +40,5 @@ func (ro *RajaOngkirServices) FindCost(req *params.RajaOngkirQueryCost) *view.Re
 	if err != nil {
 		return view.ErrInternalServer("FIND_COST_FAIL", err.Error())
 	}
-	return view.SuccessFindAll(city)
+	return view.SuccessFindAll("FIND_COST_SUCCESS", city)
 }

@@ -18,6 +18,15 @@ func SuccessCreated(message interface{}) *Response {
 	}
 }
 
+func SuccessAdd(message interface{}, payload interface{}) *Response {
+	return &Response{
+		Status:      http.StatusCreated,
+		Message:     message,
+		Payload:     payload,
+		GeneralInfo: "NooBee-Shop",
+	}
+}
+
 func SuccessLogin(message interface{}, payload interface{}) *Response {
 	return &Response{
 		Status:      http.StatusOK,
@@ -36,17 +45,18 @@ func SuccessUpdated(message interface{}, payload interface{}) *Response {
 	}
 }
 
-func SuccessDeleted(message interface{}) *Response {
+func SuccessDeleted(message interface{}, payload interface{}) *Response {
 	return &Response{
-		Status:      http.StatusCreated,
+		Status:      http.StatusOK,
 		Message:     message,
 		GeneralInfo: "NooBee-Shop",
 	}
 }
 
-func SuccessFindAll(payload interface{}) *Response {
+func SuccessFindAll(message interface{}, payload interface{}) *Response {
 	return &Response{
 		Status:      http.StatusOK,
+		Message:     message,
 		Payload:     payload,
 		GeneralInfo: "NooBee-Shop",
 	}

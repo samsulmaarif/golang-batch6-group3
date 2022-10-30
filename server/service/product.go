@@ -30,7 +30,7 @@ func (p *ProductServices) GetProducts() *view.Response {
 		return view.ErrInternalServer("GET_PRODUCT_FAIL", err.Error())
 	}
 
-	return view.SuccessFindAll(view.NewProductFindAllResponse(products))
+	return view.SuccessFindAll("GET_PRODUCT_SUCCESS", view.NewProductFindAllResponse(products))
 }
 
 func (p *ProductServices) AddProduct(req *params.ProductCreate) *view.Response {
@@ -66,7 +66,7 @@ func (p *ProductServices) DeleteProductById(id string) *view.Response {
 			return view.ErrInternalServer("DELETE_PRODUCT_FAIL", err.Error())
 		}
 
-		return view.SuccessFindAll(delete)
+		return view.SuccessDeleted("DELETE_PRODUCT_SUCCESS", delete)
 	}
 	return nil
 }
@@ -82,7 +82,7 @@ func (p *ProductServices) UpdateProductById(id string, req *params.ProductUpdate
 		return view.ErrInternalServer("UPDATE_PRODUCT_FAIL", err.Error())
 	}
 
-	return view.SuccessFindAll("UPDATE_PRODUCT_SUCCESS")
+	return view.SuccessUpdated("UPDATE_PRODUCT_SUCCESS", product)
 }
 
 func (p *ProductServices) FindProductById(id string) *view.Response {
@@ -93,5 +93,5 @@ func (p *ProductServices) FindProductById(id string) *view.Response {
 		}
 		return view.ErrInternalServer("FIND_PRODUCT_FAIL", err.Error())
 	}
-	return view.SuccessFindAll(product)
+	return view.SuccessFindAll("FIND_PRODUCT_SUCCESS", product)
 }

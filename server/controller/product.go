@@ -54,7 +54,7 @@ func (p *ProductHandler) GinDeleteProduct(c *gin.Context) {
 		return
 	}
 	p.svc.DeleteProductById(Id)
-	WriteJsonResponseGin(c, view.SuccessDeleted("DELETE_PRODUCT_SUCCESS"))
+	WriteJsonResponseGin(c, view.SuccessDeleted("DELETE_PRODUCT_SUCCESS", Id))
 }
 
 func (p *ProductHandler) GinUpdateProduct(c *gin.Context) {
